@@ -406,6 +406,7 @@ class XTick(Tick):
     __name__ = 'xtick'
 
     def __init__(self, *args, **kwargs):
+        grid_xy = (kwargs.pop("grid_xdata", [0, 0]), kwargs.pop("grid_ydata", [0, 1]))
         super().__init__(*args, **kwargs)
         # x in data coords, y in axes coords
         ax = self.axes
@@ -414,7 +415,7 @@ class XTick(Tick):
         self.tick2line.set(
             data=([0], [1]), transform=ax.get_xaxis_transform("tick2"))
         self.gridline.set(
-            data=([0, 0], [0, 1]), transform=ax.get_xaxis_transform("grid"))
+            data=grid_xy, transform=ax.get_xaxis_transform("grid"))
         # the y loc is 3 points below the min of y axis
         trans, va, ha = self._get_text1_transform()
         self.label1.set(
@@ -467,6 +468,7 @@ class YTick(Tick):
     __name__ = 'ytick'
 
     def __init__(self, *args, **kwargs):
+        grid_xy = (kwargs.pop("grid_xdata", [0, 1]), kwargs.pop("grid_ydata", [0, 0]))
         super().__init__(*args, **kwargs)
         # x in axes coords, y in data coords
         ax = self.axes
@@ -475,7 +477,7 @@ class YTick(Tick):
         self.tick2line.set(
             data=([1], [0]), transform=ax.get_yaxis_transform("tick2"))
         self.gridline.set(
-            data=([0, 1], [0, 0]), transform=ax.get_yaxis_transform("grid"))
+            data=(grid_xy), transform=ax.get_yaxis_transform("grid"))
         # the y loc is 3 points below the min of y axis
         trans, va, ha = self._get_text1_transform()
         self.label1.set(
